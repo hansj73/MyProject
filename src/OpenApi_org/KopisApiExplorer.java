@@ -1,4 +1,4 @@
-package openAPI;
+package OpenApi_org;
 
 
 import java.awt.Color;
@@ -11,7 +11,9 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -19,67 +21,30 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
 import javax.imageio.ImageIO;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-public class KopisApiExplorer_org {
-
-	public static void main(String[] args)  {
+public class KopisApiExplorer {
+	 
+	 
+	 public  ArrayList<KopisApiDto> getKopisList()
+	 {
 		
-		
-		  String Detail_apiXml="";
 		  String List_apiXml="";
-		 
 		  try {
 			  /** 리스트조회***/
 			 List_apiXml= apiData(); // 리스트 조회
 			 /*System.out.println(":::apiXml::"+List_apiXml);*/
 			 ArrayList<KopisApiDto> list=processDocument(List_apiXml);
 			 /*System.out.println(":::list_size::"+list.size());*/
-			  
-			 int i=1;
-			  //데이터 확인용
-		        Iterator<KopisApiDto> iterator = list.iterator();
-		        while (iterator.hasNext()) {
-		        	KopisApiDto tmp = (KopisApiDto) iterator.next();
-		        	/*System.out.println("::::공연poster::mt20id:::"+tmp.getPoster().toString());*/
-		        	/** 포스트파일 저장**/
-		        	ImageRead(tmp.getPoster().toString());
-		        	Detail_apiXml= apiDataDetail(tmp.getMt20id().toString()); // 리스트 조회
-					  /*System.out.println(":::apiXml::"+Detail_apiXml);*/
-					  ArrayList<KopisApiDto> detail=processDocumentDetail(Detail_apiXml);
-					 //데이터 확인용
-					  /*System.out.println(detail.get(0).getPoster());*/
-					  /*** detail 호출 ***/
-				        Iterator<KopisApiDto> deiterator = detail.iterator();
-				        while (deiterator.hasNext()) {
-				        	KopisApiDto tmp1 = (KopisApiDto) deiterator.next();
-				        
-				        	System.out.print(i+"::mt20id::"+tmp1.getMt20id().toString());
-				            System.out.print("::prfnm:"+tmp1.getPrfnm().toString());
-				            System.out.print("::prfpdfrom::"+tmp1.getPrfpdfrom().toString());
-				            System.out.print("::prfpdto::"+tmp1.getPrfpdto().toString());
-				            System.out.print("::fcltynm::"+tmp1.getFcltynm().toString());
-				            System.out.print("::prfruntime::"+tmp1.getPrfruntime().toString());
-				            System.out.print("::prfage::"+tmp1.getPrfage().toString());
-				            System.out.print("::prfruntime::"+tmp1.getPrfruntime().toString());
-				            System.out.print("::dentrpsnmata::"+tmp1.getEntrpsnm().toString());
-				            System.out.print("::pcseguidance::"+tmp1.getPcseguidance().toString());
-				            System.out.print("::poster::"+tmp1.getPoster().toString());
-				            System.out.print("::genrenm::"+tmp1.getGenrenm().toString());
-				            System.out.print("::prfstate::"+tmp1.getPrfstate().toString());
-				            System.out.print("::dtguidance::"+tmp1.getDtguidance().toString());
-				            System.out.println("\n");
-
-				        }
-				        i++;	
-		        }
-		        
+		        return list;
 			 } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		  return null;
     }
 	
 	/**
@@ -120,7 +85,7 @@ public class KopisApiExplorer_org {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String apiDataDetail(String mt20id) throws IOException{
+	public  static  String apiDataDetail(String mt20id) throws IOException{
 		
 		StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr/"); 
         urlBuilder.append(mt20id+"?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
@@ -173,7 +138,7 @@ public class KopisApiExplorer_org {
                         if(startTag.equals("mt20id")) {
                         	openData.setMt20id(parser.nextText());
                         }
-                        if(startTag.equals("prfnm")) {
+                  /*      if(startTag.equals("prfnm")) {
                         	openData.setPrfnm(parser.nextText());
                         }
                         if(startTag.equals("prfpdfrom")) {
@@ -190,7 +155,7 @@ public class KopisApiExplorer_org {
                         }
                         if(startTag.equals("prfstate")) {
                         	openData.setPrfstate(parser.nextText());
-                        }
+                        }*/
                         break;
                     case XmlPullParser.END_TAG:
                         String endTag = parser.getName();
@@ -217,7 +182,7 @@ public class KopisApiExplorer_org {
 	 * @param apiXml
 	 * @return
 	 */
-	private static ArrayList<KopisApiDto>  processDocumentDetail(String apiXml)  {
+	public static  ArrayList<KopisApiDto>  processDocumentDetail(String apiXml)  {
 	    // xmlPullParser
 		ArrayList<KopisApiDto> arrayList = new ArrayList<KopisApiDto>();
 	    try {

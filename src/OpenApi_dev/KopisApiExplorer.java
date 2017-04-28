@@ -1,4 +1,4 @@
-package openAPI;
+package OpenApi_dev;
 
 
 import java.awt.Color;
@@ -314,10 +314,10 @@ public class KopisApiExplorer {
     	graphics.drawImage(image,0,0,null);
         String fileNm = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
         String file_ext = fileNm.substring(fileNm.lastIndexOf('.')+1,fileNm.length());
-//        System.out.println("::::fileNm::"+fileNm+"::file_ext:::"+file_ext);
+        System.out.println("::::fileNm::"+fileNm+"::file_ext:::"+file_ext);
         String localPath="G:/downImage";
         ImageIO.write(bufferdImage, file_ext, new File(localPath+"/"+fileNm));
-//        System.out.println(fileNm+"다운완료");
+        System.out.println(fileNm+"다운완료");
 	}
 		
 	

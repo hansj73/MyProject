@@ -1,4 +1,4 @@
-package openAPI;
+package OpenApi_org;
 
 public class DataApiDto {
 

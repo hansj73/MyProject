@@ -1,9 +1,6 @@
-package openAPI;
+package OpenApi_org;
 
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -11,40 +8,105 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
-import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-public class KopisApiExplorer {
-	 
-	 
-	 public  ArrayList<KopisApiDto> getKopisList()
-	 {
+public class OpenApiTest {
+
+	public static void main(String[] args)  {
 		
+		
+		  String Detail_apiXml="";
 		  String List_apiXml="";
+      
 		  try {
 			  /** 리스트조회***/
 			 List_apiXml= apiData(); // 리스트 조회
-			 /*System.out.println(":::apiXml::"+List_apiXml);*/
+//			 System.out.println(":::apiXml::"+List_apiXml);
 			 ArrayList<KopisApiDto> list=processDocument(List_apiXml);
-			 /*System.out.println(":::list_size::"+list.size());*/
-		        return list;
-			 } catch (IOException e) {
+//			 System.out.println(":::list_size::"+list.size());
+			  
+			 int i=1;
+			  //데이터 확인용
+		        Iterator<KopisApiDto> iterator = list.iterator();
+		        while (iterator.hasNext()) {
+		        	KopisApiDto tmp = (KopisApiDto) iterator.next();
+//		        	System.out.println("::::공연ID::mt20id:::"+tmp.getMt20id().toString());
+		            /*System.out.println("::::data:::"+tmp.getPrfnm().toString());
+		            System.out.println("::::data:::"+tmp.getPrfpdfrom().toString());
+		            System.out.println("::::data:::"+tmp.getPrfpdto().toString());
+		            System.out.println("::::data:::"+tmp.getFcltynm().toString());
+		            System.out.println("::::data:::"+tmp.getPoster().toString());
+		            System.out.println("::::data:::"+tmp.getGenrenm().toString());
+		            System.out.println("::::data:::"+tmp.getPrfstate().toString());*/
+		        	
+		        	Detail_apiXml= apiDataDetail(tmp.getMt20id().toString()); // 리스트 조회
+//					  System.out.println(":::apiXml::"+Detail_apiXml);
+					  ArrayList<KopisApiDto> detail=processDocumentDetail(Detail_apiXml);
+					 //데이터 확인용
+				        Iterator<KopisApiDto> deiterator = detail.iterator();
+				        while (deiterator.hasNext()) {
+				        	KopisApiDto tmp1 = (KopisApiDto) deiterator.next();
+				        
+				        	System.out.print(i+"::mt20id::"+tmp1.getMt20id().toString());
+				            System.out.print("::prfnm:"+tmp1.getPrfnm().toString());
+				            System.out.print("::prfpdfrom::"+tmp1.getPrfpdfrom().toString());
+				            System.out.print("::prfpdto::"+tmp1.getPrfpdto().toString());
+				            System.out.print("::fcltynm::"+tmp1.getFcltynm().toString());
+				            System.out.print("::prfruntime::"+tmp1.getPrfruntime().toString());
+				            System.out.print("::prfage::"+tmp1.getPrfage().toString());
+				            System.out.print("::prfruntime::"+tmp1.getPrfruntime().toString());
+				            System.out.print("::dentrpsnmata::"+tmp1.getEntrpsnm().toString());
+				            System.out.print("::pcseguidance::"+tmp1.getPcseguidance().toString());
+				            System.out.print("::poster::"+tmp1.getPoster().toString());
+				            System.out.print("::genrenm::"+tmp1.getGenrenm().toString());
+				            System.out.print("::prfstate::"+tmp1.getPrfstate().toString());
+				            System.out.print("::dtguidance::"+tmp1.getDtguidance().toString());
+				            System.out.println("\n");
+
+				        }
+				        i++;	
+		        	
+		        }
+		        
+			  /** detail 페이지 조회 ***/
+			  /*
+			  Detail_apiXml= apiDataDetail("PF137106"); // 리스트 조회
+			  System.out.println(":::apiXml::"+Detail_apiXml);
+			  ArrayList<KopisApiDto> detail=processDocumentDetail(Detail_apiXml);
+			 //데이터 확인용
+		        Iterator<KopisApiDto> diterator = detail.iterator();
+		        while (iterator.hasNext()) {
+		        	KopisApiDto tmp = (KopisApiDto) diterator.next();
+		        
+		        	System.out.println("::::data:::"+tmp.getMt20id().toString());
+		            System.out.println("::::data:::"+tmp.getPrfnm().toString());
+		            System.out.println("::::data:::"+tmp.getPrfpdfrom().toString());
+		            System.out.println("::::data:::"+tmp.getPrfpdto().toString());
+		            System.out.println("::::data:::"+tmp.getFcltynm().toString());
+		            System.out.println("::::data:::"+tmp.getPrfcrew().toString());
+		            System.out.println("::::data:::"+tmp.getPrfruntime().toString());
+		            System.out.println("::::data:::"+tmp.getStyurl1().toString());
+
+		        }
+*/			 
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		  return null;
     }
 	
 	/**
@@ -56,7 +118,7 @@ public class KopisApiExplorer {
 		
 			StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr"); 
 	        urlBuilder.append("?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
-	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage=1&rows=30&prfstate=&signgucode=&signgucodesub=");
+	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage=1&rows=50&prfstate=&signgucode=&signgucodesub=");
 	        URL url = new URL(urlBuilder.toString());
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
@@ -85,7 +147,7 @@ public class KopisApiExplorer {
 	 * @return
 	 * @throws IOException
 	 */
-	public  static  String apiDataDetail(String mt20id) throws IOException{
+	public static String apiDataDetail(String mt20id) throws IOException{
 		
 		StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr/"); 
         urlBuilder.append(mt20id+"?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
@@ -138,7 +200,7 @@ public class KopisApiExplorer {
                         if(startTag.equals("mt20id")) {
                         	openData.setMt20id(parser.nextText());
                         }
-                  /*      if(startTag.equals("prfnm")) {
+                        if(startTag.equals("prfnm")) {
                         	openData.setPrfnm(parser.nextText());
                         }
                         if(startTag.equals("prfpdfrom")) {
@@ -155,7 +217,7 @@ public class KopisApiExplorer {
                         }
                         if(startTag.equals("prfstate")) {
                         	openData.setPrfstate(parser.nextText());
-                        }*/
+                        }
                         break;
                     case XmlPullParser.END_TAG:
                         String endTag = parser.getName();
@@ -182,7 +244,7 @@ public class KopisApiExplorer {
 	 * @param apiXml
 	 * @return
 	 */
-	public static  ArrayList<KopisApiDto>  processDocumentDetail(String apiXml)  {
+	private static ArrayList<KopisApiDto>  processDocumentDetail(String apiXml)  {
 	    // xmlPullParser
 		ArrayList<KopisApiDto> arrayList = new ArrayList<KopisApiDto>();
 	    try {
@@ -297,28 +359,6 @@ public class KopisApiExplorer {
         /*System.out.println(":::img_url::"+img_url);*/
         return img_url;
     }
-	
-	public static void ImageRead(String imageUrl) throws IOException{
-		
-		BufferedImage image=null;
-		int width = 0;
-		int height = 0;
-		//String imageUrl="";
-		//imageUrl=PosterImgUrl+"/"+;
-		System.out.println(imageUrl);
-	
-    	image = ImageIO.read(new URL(imageUrl));
-    	BufferedImage bufferdImage = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_BGR);
-    	Graphics2D graphics = (Graphics2D)bufferdImage.getGraphics();
-    	graphics.setBackground(Color.WHITE);
-    	graphics.drawImage(image,0,0,null);
-        String fileNm = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-        String file_ext = fileNm.substring(fileNm.lastIndexOf('.')+1,fileNm.length());
-//        System.out.println("::::fileNm::"+fileNm+"::file_ext:::"+file_ext);
-        String localPath="G:/downImage";
-        ImageIO.write(bufferdImage, file_ext, new File(localPath+"/"+fileNm));
-//        System.out.println(fileNm+"다운완료");
-	}
 		
 	
 }// class end

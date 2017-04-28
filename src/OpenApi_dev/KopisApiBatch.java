@@ -1,4 +1,4 @@
-package openAPI;
+package OpenApi_dev;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -83,7 +83,6 @@ public class KopisApiBatch {
                 
                 int cnt=(rs.next()==true)?rs.getInt("count"):-1;
               
-                System.out.println(":::::cnt:::"+cnt);
                 if(cnt==0)
                 {
                 	Detail_apiXml= KopisApiExplorer.apiDataDetail(mt20id); // 리스트 조회
@@ -112,8 +111,7 @@ public class KopisApiBatch {
                 }
               	else if(cnt>0)
               	{
-              		System.out.println(":::cnt::"+cnt);
-              		System.out.println("등록되어있습니다..");
+              		System.out.println("등록되어 있습니다.");
               	}
               	else
               	{

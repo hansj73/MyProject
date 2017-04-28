@@ -1,6 +1,6 @@
-package openAPI;
+package OpenApi_org;
 
-public class SimpleThreads {
+public class KopisApiBatchThreads {
 
 	// Display a message, preceded by
     // the name of the current thread
@@ -24,8 +24,8 @@ public class SimpleThreads {
                 for (int i = 0;
                      i < importantInfo.length;
                      i++) {
-                    // Pause for 4 seconds
-                    Thread.sleep(4000);
+                    // Pause for 30 seconds
+                    Thread.sleep(30000);
                     // Print a message
                     threadMessage(importantInfo[i]);
                 }
@@ -37,23 +37,12 @@ public class SimpleThreads {
 
     public static void main(String args[]) throws InterruptedException {
 
-        // Delay, in milliseconds before
-        // we interrupt MessageLoop
-        // thread (default one hour).
         long patience = 1000 * 60 * 60;
 
         // If command line argument
         // present, gives patience
         // in seconds.
-        if (args.length > 0) {
-            try {
-                patience = Long.parseLong(args[0]) * 1000;
-            } catch (NumberFormatException e) {
-                System.err.println("Argument must be an integer.");
-                System.exit(1);
-            }
-        }
-
+    
         threadMessage("Starting MessageLoop thread");
         long startTime = System.currentTimeMillis();
         Thread t = new Thread(new MessageLoop());
