@@ -145,20 +145,10 @@ public class KopisApiBatch {
 		KopisApiBatch dbcon = new KopisApiBatch();
 		KopisApiExplorer kopisEx = new KopisApiExplorer();
 		
-		
-		
 		dbcon.getConnection(); //** 디비접속***//*
 	
-		
-/*		  Map<String,String> Api_detail = (Map<String,String>) kopisEx.getKopisList();
-		 
-		  for( String key : Api_detail.keySet() ){
-	            System.out.println( String.format("키 : %s, 값 : %s", key, Api_detail.get(key)) );
-	        }
-*/
 		ArrayList<KopisApiDto> Api_list = (ArrayList<KopisApiDto>) kopisEx.getKopisList();
 		
-//		 System.out.println(Api_detail.size());
 		 
 		 for(int i=0; i<Api_list.size(); i++){
 //			 System.out.println(Api_detail.get(i).getMt20id());
@@ -169,12 +159,7 @@ public class KopisApiBatch {
 				e.printStackTrace();
 			}
 		 }
-		 
-		 
-//			dbcon.getData();
 			dbcon.closeConnection();
-
-				
 	}
 
 }

@@ -1,58 +1,50 @@
 package OpenApi_dev;
 
-public class SimpleThreads {
+public class SimpleThreads extends DbConnTest{
 
 	// Display a message, preceded by
     // the name of the current thread
+	
+	
+	
     static void threadMessage(String message) {
-        String threadName =
-            Thread.currentThread().getName();
-        System.out.format("%s: %s%n",
-                          threadName,
-                          message);
+        String threadName =Thread.currentThread().getName();
+        System.out.format("%s: %s%n",threadName,message);
+        
     }
 
     private static class MessageLoop implements Runnable {
         public void run() {
-            String importantInfo[] = {
-                "Mares eat oats",
-                "Does eat oats",
-                "Little lambs eat ivy",
-                "A kid will eat ivy too"
-            };
+        	
             try {
-                for (int i = 0;
-                     i < importantInfo.length;
-                     i++) {
-                    // Pause for 4 seconds
-                    Thread.sleep(4000);
+            	int j=1;
+            	/*for (;;) {// 무한루푸
+*/            		for (int i=0; i<3; i++) {// 무한루푸
+                    Thread.sleep(3000);
                     // Print a message
-                    threadMessage(importantInfo[i]);
-                }
+                    
+//                   int list_size= DbConnTest.ApiMain();
+                   DbConnTest.ApiMain(j++);
+                   
+                   System.out.println(":::list_size::");
+//                  if(list_size ==0){
+//                	  System.out.println(":::list_size_break::");
+//                	  break;
+//                  }
+                    threadMessage("DbConnTest.getConnection()");
+            	}
+          
             } catch (InterruptedException e) {
-                threadMessage("I wasn't done!");
+        
             }
         }
     }
 
     public static void main(String args[]) throws InterruptedException {
 
-        // Delay, in milliseconds before
-        // we interrupt MessageLoop
-        // thread (default one hour).
         long patience = 1000 * 60 * 60;
-
-        // If command line argument
-        // present, gives patience
-        // in seconds.
-        if (args.length > 0) {
-            try {
-                patience = Long.parseLong(args[0]) * 1000;
-            } catch (NumberFormatException e) {
-                System.err.println("Argument must be an integer.");
-                System.exit(1);
-            }
-        }
+      
+        DbConnTest.DbDriverLoad();// 디비 드라이버 로딩
 
         threadMessage("Starting MessageLoop thread");
         long startTime = System.currentTimeMillis();
@@ -64,15 +56,10 @@ public class SimpleThreads {
         // thread exits
         while (t.isAlive()) {
             threadMessage("Still waiting...");
-            // Wait maximum of 1 second
-            // for MessageLoop thread
-            // to finish.
             t.join(1000);
             if (((System.currentTimeMillis() - startTime) > patience) && t.isAlive()) {
                 threadMessage("Tired of waiting!");
                 t.interrupt();
-                // Shouldn't be long now
-                // -- wait indefinitely
                 t.join();
             }
         }

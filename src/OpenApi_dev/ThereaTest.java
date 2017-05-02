@@ -20,13 +20,17 @@ public class ThereaTest extends Thread {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		for(int i=0; i<10; i++){
+		int tmp=1;
+		for(int i=0; i<3; i++){
 		ThereaTest t = new ThereaTest(i);
 		
 		t.start();
+		System.out.println("::tmp::"+tmp++);
 		}
 		System.out.println("::main..end::");
+		
+		
+		
 		
 
 	}

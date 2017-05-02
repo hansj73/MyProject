@@ -56,7 +56,7 @@ public class KopisApiExplorer {
 		
 			StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr"); 
 	        urlBuilder.append("?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
-	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage=1&rows=30&prfstate=&signgucode=&signgucodesub=");
+	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage=30&rows=30&prfstate=&signgucode=&signgucodesub=");
 	        URL url = new URL(urlBuilder.toString());
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
