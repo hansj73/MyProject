@@ -1,4 +1,4 @@
-package openAPI;
+package OpenAPI_ver1;
 
 import java.io.FileInputStream;
 import java.io.IOException;

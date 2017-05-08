@@ -1,6 +1,6 @@
-package OpenApi_dev;
+package OpenApi_ver2;
 
-public class SimpleThreads extends DbConnTest{
+public class KopisApiBatchThread extends KopisApiBatch{
 
     static void threadMessage(String message) {
         String threadName =Thread.currentThread().getName();
@@ -15,9 +15,10 @@ public class SimpleThreads extends DbConnTest{
             	for (;;) {// 무한루푸
             		/*for (int i=0; i<3; i++) {// 무한루푸*/                    
             		Thread.sleep(4000);//4초
-                   int list_size= DbConnTest.ApiMain(j++);
+                   int list_size= KopisApiBatch.ApiMain(j++);
                    /*DbConnTest.ApiMain(j++);*/
                    /*threadMessage("DbConnTest.getConnection()");*/
+                   System.out.println("::pageCnt::"+j);
                   if(list_size ==0){
                 	  System.out.println(":::list_size_break::");
                 	  break;
@@ -35,7 +36,7 @@ public class SimpleThreads extends DbConnTest{
 
         long patience = 1000 * 60 * 60;
       
-        DbConnTest.DbDriverLoad();// 디비 드라이버 로딩
+        KopisApiBatch.DbDriverLoad();// 디비 드라이버 로딩
 
         threadMessage("Starting  thread");
 

@@ -1,4 +1,4 @@
-package OpenApi_dev;
+package OpenApi_ver2;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class DbConnTest {
+public class KopisApiBatch {
 	static Connection con;
 	static Statement stmt;
     static ResultSet rs;
@@ -97,7 +97,12 @@ public class DbConnTest {
                           	  
               	stmt.executeUpdate(sb.toString());
               	
-              	KopisApiExplorer.ImageRead(Api_detail.get(0).getPoster());
+              	try {
+					KopisApiExplorer.ImageRead(Api_detail.get(0).getPoster());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
               	
               	System.out.println("파일 입력 및 이미지 저장 완료");
               }
@@ -135,7 +140,6 @@ public class DbConnTest {
     public static int  ApiMain(int s_num) 
     {
 		// TODO Auto-generated method stub
-//		KopisApiBatch dbcon = new KopisApiBatch();
 		KopisApiExplorer kopisEx = new KopisApiExplorer();
 		
 		ArrayList<KopisApiDto> Api_list = (ArrayList<KopisApiDto>) kopisEx.getKopisList(s_num);
@@ -157,6 +161,8 @@ public class DbConnTest {
 		 if(list_cnt >0 ){
 			  closeConnection();
 		 }
+		 
+		 System.out.println(":::성공갯수::"+s_num*20);
 		 
 		 return list_cnt;
 				

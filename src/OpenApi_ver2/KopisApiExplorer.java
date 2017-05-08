@@ -1,4 +1,4 @@
-package OpenApi_dev;
+package OpenApi_ver2;
 
 
 import java.awt.Color;
@@ -16,7 +16,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
@@ -58,7 +60,7 @@ public class KopisApiExplorer {
 	        urlBuilder.append("?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
 	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage="+c_page+"&rows=20&prfstate=&signgucode=&signgucodesub=");
 	        URL url = new URL(urlBuilder.toString());
-	        System.out.println(":::xml:::"+urlBuilder.toString());
+	        /*System.out.println(":::xml:::"+urlBuilder.toString());*/
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Content-type", "application/xml");
@@ -299,14 +301,16 @@ public class KopisApiExplorer {
         return img_url;
     }
 	
-	public static void ImageRead(String imageUrl) throws IOException{
+	public static void ImageRead(String imageUrl) throws Exception{
 		
 		BufferedImage image=null;
 		int width = 0;
 		int height = 0;
 		//String imageUrl="";
 		//imageUrl=PosterImgUrl+"/"+;
-		System.out.println(imageUrl);
+//		System.out.println(imageUrl);
+		
+		try{
 	
     	image = ImageIO.read(new URL(imageUrl));
     	BufferedImage bufferdImage = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_BGR);
@@ -319,7 +323,29 @@ public class KopisApiExplorer {
         String localPath="G:/downImage";
         ImageIO.write(bufferdImage, file_ext, new File(localPath+"/"+fileNm));
         System.out.println(fileNm+"다운완료");
+        
+		}catch(Exception e){
+			EtcImageWrite(imageUrl);
+		}
 	}
+	
+	 public static void EtcImageWrite(String targetUrl)throws Exception {
+		 
+//		    String targetUrl="http://www.kopis.or.kr/upload/pfmPoster/PF_PF136954_170414_100633.jpg";
+		    File file = new File(targetUrl);
+//		    System.out.println("::ffa::"+file.getName());
+		    FileOutputStream in = new FileOutputStream("G:/downImage/"+file.getName());
+		  
+		    URL url = new URL(targetUrl);
+		    InputStream fi = url.openStream();
+		    int size;
+		    while((size=fi.read())>-1){
+		    	in.write(size);
+		    }
+		    in.close();
+		 
+		 System.out.println("::::EtcImageWrite::"+targetUrl);
+	 }
 		
 	
 }// class end

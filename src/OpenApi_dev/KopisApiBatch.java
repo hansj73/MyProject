@@ -154,20 +154,17 @@ public class KopisApiBatch {
 	            System.out.println( String.format("키 : %s, 값 : %s", key, Api_detail.get(key)) );
 	        }
 */
-		ArrayList<KopisApiDto> Api_list = (ArrayList<KopisApiDto>) kopisEx.getKopisList();
+/*		ArrayList<KopisApiDto> Api_list = (ArrayList<KopisApiDto>) kopisEx.getKopisList();
 		
-//		 System.out.println(Api_detail.size());
 		 
 		 for(int i=0; i<Api_list.size(); i++){
-//			 System.out.println(Api_detail.get(i).getMt20id());
 			 try {
 				dbcon.getData(Api_list.get(i).getMt20id());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		 }
-		 
+*/		 
 		 
 //			dbcon.getData();
 			dbcon.closeConnection();

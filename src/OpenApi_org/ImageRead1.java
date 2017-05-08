@@ -20,15 +20,15 @@ public class ImageRead1 {
 		int height = 0;
 
         try {
-        	imageUrl="http://www.kopis.or.kr/upload/pfmIntroImage/PF_PF132236_160704_0226303.jpg";
+        	imageUrl="http://www.kopis.or.kr/upload/pfmPoster/PF_PF136954_170414_100633.jpg";
             URL url = new URL(imageUrl);
             String fileNm = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
             String file_ext = fileNm.substring(fileNm.lastIndexOf('.')+1,fileNm.length());
             System.out.println("::::fileNm::"+fileNm+"::file_ext:::"+file_ext);
             
-//            BufferedImage img = ImageIO.read(url);
-//            File file=new File("G:/downImage/test1.jpg");
-//            ImageIO.write(img, "jpg", file);
+            BufferedImage img = ImageIO.read(url);
+            File file=new File("G:/downImage/test1.jpg");
+            ImageIO.write(img, "jpg", file);
             
             
         } catch (IOException e) {
