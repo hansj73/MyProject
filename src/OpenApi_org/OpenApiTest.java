@@ -62,7 +62,7 @@ public class OpenApiTest {
 				        	KopisApiDto tmp1 = (KopisApiDto) deiterator.next();
 				        
 				        	System.out.print(i+"::mt20id::"+tmp1.getMt20id().toString());
-				            System.out.print("::prfnm:"+tmp1.getPrfnm().toString());
+				        /*    System.out.print("::prfnm:"+tmp1.getPrfnm().toString());
 				            System.out.print("::prfpdfrom::"+tmp1.getPrfpdfrom().toString());
 				            System.out.print("::prfpdto::"+tmp1.getPrfpdto().toString());
 				            System.out.print("::fcltynm::"+tmp1.getFcltynm().toString());
@@ -74,7 +74,8 @@ public class OpenApiTest {
 				            System.out.print("::poster::"+tmp1.getPoster().toString());
 				            System.out.print("::genrenm::"+tmp1.getGenrenm().toString());
 				            System.out.print("::prfstate::"+tmp1.getPrfstate().toString());
-				            System.out.print("::dtguidance::"+tmp1.getDtguidance().toString());
+				            System.out.print("::dtguidance::"+tmp1.getDtguidance().toString());*/
+				            System.out.print("::::data:::"+tmp1.getStyurl1().toString());
 				            System.out.println("\n");
 
 				        }
@@ -118,7 +119,9 @@ public class OpenApiTest {
 		
 			StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr"); 
 	        urlBuilder.append("?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
-	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage=1&rows=50&prfstate=&signgucode=&signgucodesub=");
+	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage=1&rows=30&prfstate=01");
+	        urlBuilder.append("&shprfnmfct="+ URLEncoder.encode("예술의전당","UTF-8") );
+	        /*System.out.println("::::urlBuilder.toString():::"+urlBuilder.toString());*/
 	        URL url = new URL(urlBuilder.toString());
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
@@ -152,6 +155,7 @@ public class OpenApiTest {
 		StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr/"); 
         urlBuilder.append(mt20id+"?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
         URL url = new URL(urlBuilder.toString());
+        System.out.println(":::::apiDataDetail::::"+urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/xml");
@@ -305,10 +309,10 @@ public class OpenApiTest {
                         if(startTag.equals("dtguidance")) {
                         	openData.setDtguidance(parser.nextText());
                         }
-                        /*if(startTag.equals("styurls")) {
+                        if(startTag.equals("styurls")) {
                         	String styurl_img=processImageElement(parser);
                         	openData.setStyurl1(styurl_img);
-                        }*/
+                        }
                         break;
                     case XmlPullParser.END_TAG:
                         String endTag = parser.getName();

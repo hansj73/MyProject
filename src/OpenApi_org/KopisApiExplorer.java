@@ -243,10 +243,10 @@ public class KopisApiExplorer {
                         if(startTag.equals("dtguidance")) {
                         	openData.setDtguidance(parser.nextText());
                         }
-                        /*if(startTag.equals("styurls")) {
+                        if(startTag.equals("styurls")) {
                         	String styurl_img=processImageElement(parser);
                         	openData.setStyurl1(styurl_img);
-                        }*/
+                        }
                         break;
                     case XmlPullParser.END_TAG:
                         String endTag = parser.getName();

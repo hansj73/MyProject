@@ -151,7 +151,6 @@ public class KopisApiBatch {
 		
 		 
 		 for(int i=0; i<Api_list.size(); i++){
-//			 System.out.println(Api_detail.get(i).getMt20id());
 			 try {
 				dbcon.getData(Api_list.get(i).getMt20id());
 			} catch (IOException e) {

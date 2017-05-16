@@ -1,7 +1,18 @@
 package OpenApi_org;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Properties;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 public class SimpleThreads {
 
+	static final String propFile = "G:/study/workspace/OpenApi/config/config.properties";
+
+	
 	// Display a message, preceded by
     // the name of the current thread
     static void threadMessage(String message) {
@@ -13,21 +24,38 @@ public class SimpleThreads {
     }
 
     private static class MessageLoop implements Runnable {
+    	
+        // 프로퍼티 파일 로딩
         public void run() {
-            String importantInfo[] = {
-                "Mares eat oats",
-                "Does eat oats",
-                "Little lambs eat ivy",
-                "A kid will eat ivy too"
-            };
+        	
+     
+        	ClassLoader cl=ClassLoader.getSystemClassLoader();
+            URL url = cl.getResource( "OpenApi_ver3/config.properties" );
+            System.out.println(url.toString());
+            
+        	
+        	Properties props = new Properties();
+        	// 프로퍼티 파일 스트림에 담기
+        	FileInputStream fis=null;
+			try {
+				fis = new FileInputStream(propFile);
+				props.load(new java.io.BufferedInputStream(fis));
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+            String[] importantInfo = props.getProperty("artOrgName").split(",") ;
+            		
             try {
-                for (int i = 0;
-                     i < importantInfo.length;
-                     i++) {
+                for(String i :importantInfo) {
                     // Pause for 4 seconds
-                    Thread.sleep(4000);
+                    Thread.sleep(1000);
                     // Print a message
-                    threadMessage(importantInfo[i]);
+                    threadMessage(i);
                 }
             } catch (InterruptedException e) {
                 threadMessage("I wasn't done!");

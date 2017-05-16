@@ -53,12 +53,13 @@ public class KopisApiExplorer {
 	 * @desc kopsi 공연예술 api 리스트 형태로 데이터 가지고 오기
 	 * @return
 	 * @throws IOException
+	 * @param prfstate  : 01 공연예정 02공연중
 	 */
 	public static String apiData(int c_page) throws IOException{
-		
+		       
 			StringBuilder urlBuilder = new StringBuilder("http://www.kopis.or.kr/openApi/restful/pblprfr"); 
 	        urlBuilder.append("?service=23a9ef8a8db1420bb4c0044530ff15d0"); /*Service Key*/
-	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage="+c_page+"&rows=20&prfstate=&signgucode=&signgucodesub=");
+	        urlBuilder.append("&stdate=20170501&eddate=20170531&cpage="+c_page+"&rows=20&prfstate=");
 	        URL url = new URL(urlBuilder.toString());
 	        /*System.out.println(":::xml:::"+urlBuilder.toString());*/
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
