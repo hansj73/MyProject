@@ -85,7 +85,7 @@ public class DataApiExplorer {
 		
 			StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); 
 	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=JEnT6vJMpxYCducETV3cOxnRr552yZV8B2LavF0NnY0QiOVROMvZdXACBLeDMPY2p4a4dH3mMHmRj66IEh4YUA%3D%3D"); /*Service Key*/
-	        urlBuilder.append("&contentTypeId=15&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=web&arrange=A&numOfRows=12&pageNo=1");
+	        urlBuilder.append("&contentTypeId=15&areaCode=&sigunguCode=&listYN=Y&MobileOS=ETC&MobileApp=web&arrange=A&numOfRows=12&pageNo=2");
 	        urlBuilder.append("&cat1=A02&cat2=A0207"); // 축제 cat1=A02 축제 중분류 cat2=A0207 축제
 	        /*urlBuilder.append("&cat1=A02&cat2=A0208"); // 공연/행사  cat2=A*/
 	        /*System.out.println("::url::"+urlBuilder.toString());*/
